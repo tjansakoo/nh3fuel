@@ -15,11 +15,11 @@ df <- df_gdx %>% filter(REMF %in% c("World"),SCENARIO %in% c("SSP2_BaU_NoCC_glob
   mutate(SCENARIO = case_when(str_detect("SSP2_BaU_NoCC_globalnh3_global2", 
                                     SCENARIO) ~ "Baseline",
                               str_detect("SSP2_600C_CACN_DAC_NoCC_globalnh3_global2", 
-                                    SCENARIO)  ~"wo/NH3",
+                                    SCENARIO)  ~"1p5c_wo_NH3",
                               str_detect("SSP2_600C_CACN_DAC_amm_NoCC_globalnh3_global2", 
-                                    SCENARIO)  ~"w/NH3",
+                                    SCENARIO)  ~"1p5c_w_NH3",
                               str_detect("SSP2_600C_CACN_DAC_amm_LoAQC_NoCC_globalnh3_global2", 
-                                    SCENARIO)  ~"With Ammonia Fuel LoAQC"
+                                    SCENARIO)  ~"1p5c_w_NH3_LoAQC"
   )
   )
 
@@ -27,14 +27,14 @@ Emi_IAMC <- df %>% filter(str_detect(VEMF, "^Emi"))
 
 Emi_IAMC_group <- Emi_IAMC %>%
   mutate(source = case_when(
-    str_detect(VEMF, "Emi_[A-Za-z0-9]{2,3}__AFO_Agriculture_Liv$") ~ "Agriculture",
-    str_detect(VEMF, "Emi_[A-Za-z0-9]{2,3}_AFO_Agriculture_Ric$") ~ "Agriculture",
-    str_detect(VEMF, "Emi_[A-Za-z0-9]{2,3}_AFO_Lan_Cro$") ~ "Agriculture",
-    str_detect(VEMF, "Emi_[A-Za-z0-9]{2,3}_AFO_Lan_Frs$") ~ "Agriculture",
-    str_detect(VEMF, "Emi_[A-Za-z0-9]{2,3}_AFO_Lan_Gra_Pst$") ~ "Agriculture",
-    str_detect(VEMF, "Emi_[A-Za-z0-9]{2,3}_AFO_Lan_Oth_Lan$") ~ "Agriculture",
-    str_detect(VEMF, "Emi_[A-Za-z0-9]{2,3}_AFO_Lan_Set$") ~ "Agriculture",
-    str_detect(VEMF, "Emi_[A-Za-z0-9]{2,3}_AFO_Lan_Wet$") ~ "Agriculture",
+    str_detect(VEMF, "Emi_[A-Za-z0-9]{2,3}__AFO_Agr_Liv$") ~ "AFOLU",
+    str_detect(VEMF, "Emi_[A-Za-z0-9]{2,3}_AFO_Agre_Ric$") ~ "AFOLU",
+    str_detect(VEMF, "Emi_[A-Za-z0-9]{2,3}_AFO_Lan_Cro$") ~ "AFOLU",
+    str_detect(VEMF, "Emi_[A-Za-z0-9]{2,3}_AFO_Lan_Frs$") ~ "AFOLU",
+    str_detect(VEMF, "Emi_[A-Za-z0-9]{2,3}_AFO_Lan_Gra_Pst$") ~ "AFOLU",
+    str_detect(VEMF, "Emi_[A-Za-z0-9]{2,3}_AFO_Lan_Oth_Lan$") ~ "AFOLU",
+    str_detect(VEMF, "Emi_[A-Za-z0-9]{2,3}_AFO_Lan_Set$") ~ "AFOLU",
+    str_detect(VEMF, "Emi_[A-Za-z0-9]{2,3}_AFO_Lan_Wet$") ~ "AFOLU",
     str_detect(VEMF, "Emi_[A-Za-z0-9]{2,3}_Ene_Dem_Tra_Avi$") ~ "Transportation",
     str_detect(VEMF, "Emi_[A-Za-z0-9]{2,3}_Ene_Dem_Tra_Oth_Sec$") ~ "Transportation",
     str_detect(VEMF, "Emi_[A-Za-z0-9]{2,3}_Ene_Dem_Tra_Rai$") ~ "Transportation",
@@ -155,13 +155,13 @@ df_region <- df_gdx %>% filter(SCENARIO %in% c("SSP2_BaU_NoCC_globalnh3_global2"
                                                              "SSP2_600C_CACN_DAC_amm_NoCC_globalnh3_global2", 
                                                              "SSP2_600C_CACN_DAC_amm_LoAQC_NoCC_globalnh3_global2")) %>% 
   mutate(SCENARIO = case_when(str_detect("SSP2_BaU_NoCC_globalnh3_global2", 
-                                         SCENARIO) ~ "Base",
+                                         SCENARIO) ~ "Baseline",
                               str_detect("SSP2_600C_CACN_DAC_NoCC_globalnh3_global2", 
-                                         SCENARIO)  ~"1p5c_wo/nh3",
+                                         SCENARIO)  ~"1p5c_wo_nh3",
                               str_detect("SSP2_600C_CACN_DAC_amm_NoCC_globalnh3_global2", 
-                                         SCENARIO)  ~"1p5c_w/nh3",
+                                         SCENARIO)  ~"1p5c_w_nh3",
                               str_detect("SSP2_600C_CACN_DAC_amm_LoAQC_NoCC_globalnh3_global2", 
-                                         SCENARIO)  ~"1p5c_w/nh3_LoAQC"
+                                         SCENARIO)  ~"1p5c_w_nh3_LoAQC"
   )
   )
 
@@ -169,22 +169,25 @@ Emi_IAMC_region <- df_region %>% filter(str_detect(VEMF, "^Emi"))
 
 Emi_IAMC_group_region <- Emi_IAMC_region %>%
   mutate(source = case_when(
-    str_detect(VEMF, "Emi_[A-Za-z0-9]{2,3}__AFO_Agriculture_Liv$") ~ "Agriculture",
-    str_detect(VEMF, "Emi_[A-Za-z0-9]{2,3}_AFO_Agriculture_Ric$") ~ "Agriculture",
-    str_detect(VEMF, "Emi_[A-Za-z0-9]{2,3}_AFO_Lan_Cro$") ~ "Agriculture",
-    str_detect(VEMF, "Emi_[A-Za-z0-9]{2,3}_AFO_Lan_Frs$") ~ "Agriculture",
-    str_detect(VEMF, "Emi_[A-Za-z0-9]{2,3}_AFO_Lan_Gra_Pst$") ~ "Agriculture",
-    str_detect(VEMF, "Emi_[A-Za-z0-9]{2,3}_AFO_Lan_Oth_Lan$") ~ "Agriculture",
-    str_detect(VEMF, "Emi_[A-Za-z0-9]{2,3}_AFO_Lan_Set$") ~ "Agriculture",
-    str_detect(VEMF, "Emi_[A-Za-z0-9]{2,3}_AFO_Lan_Wet$") ~ "Agriculture",
-    str_detect(VEMF, "Emi_[A-Za-z0-9]{2,3}_Ene_Dem_Tra_Agg___Rai_and_Dom_Shi$") ~ "Transportation",
-    str_detect(VEMF, "Emi_[A-Za-z0-9]{2,3}_Ene_Sup$") ~ "Energy",
-    str_detect(VEMF, "Emi_[A-Za-z0-9]{2,3}_Ene_Dem_Industry$") ~ "Industry",
-    str_detect(VEMF, "Emi_[A-Za-z0-9]{2,3}_Emi_Industry_Pro$") ~ "Industry",
+    str_detect(VEMF, "Emi_[A-Za-z0-9]{2,3}__AFO_Agr_Liv$") ~ "AFOLU",
+    str_detect(VEMF, "Emi_[A-Za-z0-9]{2,3}_AFO_Agre_Ric$") ~ "AFOLU",
+    str_detect(VEMF, "Emi_[A-Za-z0-9]{2,3}_AFO_Lan_Cro$") ~ "AFOLU",
+    str_detect(VEMF, "Emi_[A-Za-z0-9]{2,3}_AFO_Lan_Frs$") ~ "AFOLU",
+    str_detect(VEMF, "Emi_[A-Za-z0-9]{2,3}_AFO_Lan_Gra_Pst$") ~ "AFOLU",
+    str_detect(VEMF, "Emi_[A-Za-z0-9]{2,3}_AFO_Lan_Oth_Lan$") ~ "AFOLU",
+    str_detect(VEMF, "Emi_[A-Za-z0-9]{2,3}_AFO_Lan_Set$") ~ "AFOLU",
+    str_detect(VEMF, "Emi_[A-Za-z0-9]{2,3}_AFO_Lan_Wet$") ~ "AFOLU",
+    str_detect(VEMF, "Emi_[A-Za-z0-9]{2,3}_Ene_Dem_Tra_Avi$") ~ "Transportation",
+    str_detect(VEMF, "Emi_[A-Za-z0-9]{2,3}_Ene_Dem_Tra_Oth_Sec$") ~ "Transportation",
+    str_detect(VEMF, "Emi_[A-Za-z0-9]{2,3}_Ene_Dem_Tra_Rai$") ~ "Transportation",
+    str_detect(VEMF, "Emi_[A-Za-z0-9]{2,3}_Ene_Dem_Tra_Roa$") ~ "Transportation",
+    str_detect(VEMF, "Emi_[A-Za-z0-9]{2,3}_Ene_Sup$") ~ "Energy Supply",
+    str_detect(VEMF, "Emi_[A-Za-z0-9]{2,3}_Ene_Dem_Ind$") ~ "Industry",
+    str_detect(VEMF, "Emi_[A-Za-z0-9]{2,3}_Emi_Ind_Pro$") ~ "Industry",
     str_detect(VEMF, "Emi_[A-Za-z0-9]{2,3}_Ene_Dem_Res_and_Com_and_AFO$") ~ "Residential and Commercial",
     str_detect(VEMF, "Emi_[A-Za-z0-9]{2,3}_Pro_Use$") ~ "Solvent",
     str_detect(VEMF, "Emi_[A-Za-z0-9]{2,3}_Was$") ~ "Waste Management",
-    str_detect(VEMF, "Emi_[A-Za-z0-9]{2,3}_Ene_Dem_Tra_Shi_Int$") ~ "International Shipping",
+    str_detect(VEMF, "Emi_[A-Za-z0-9]{2,3}_Ene_Dem_Tra_Shi$") ~ "Shipping",
     TRUE ~ "Other"
   )) %>% 
   mutate(Species = case_when(
