@@ -13,20 +13,20 @@ df <- df_gdx %>% filter(REMF %in% c("World"),SCENARIO %in% c("SSP2_BaU_NoCC_glob
                                                              "SSP2_600C_CACN_DAC_amm_NoCC_globalnh3_global2", 
                                                              "SSP2_600C_CACN_DAC_amm_LoAQC_NoCC_globalnh3_global2")) %>% 
   mutate(SCENARIO = case_when(str_detect("SSP2_BaU_NoCC_globalnh3_global2", 
-                                         SCENARIO) ~ "Base",
+                                         SCENARIO) ~ "Baseline",
                               str_detect("SSP2_600C_CACN_DAC_NoCC_globalnh3_global2", 
-                                         SCENARIO)  ~"1p5c_wo/nh3",
+                                         SCENARIO)  ~"1p5c_wo_nh3",
                               str_detect("SSP2_600C_CACN_DAC_amm_NoCC_globalnh3_global2", 
-                                         SCENARIO)  ~"1p5c_w/nh3",
+                                         SCENARIO)  ~"1p5c_w_nh3",
                               str_detect("SSP2_600C_CACN_DAC_amm_LoAQC_NoCC_globalnh3_global2", 
-                                         SCENARIO)  ~"1p5c_w/nh3_LoAQC"
+                                         SCENARIO)  ~"1p5c_w/_nh3_LoAQC"
   )
   )
 
 Fin_IAMC <- df %>% filter(VEMF %in% c("Fin_Ene_Hyd", "Fin_Ene_Liq_Bio", "Fin_Ene_Liq_Oil","Fin_Ene_Heat",
                                       "Fin_Ene_Oth", "Fin_Ene_Solids", "Fin_Ene_Gas", "Fin_Ene_Ele"))
 Fin_IAMC$VEMF <- as.character(Fin_IAMC$VEMF)
-df2 <- Fin_IAMC %>% filter(SCENARIO %in% c("1p5c_wo/nh3", "1p5c_w/nh3")) %>%
+df2 <- Fin_IAMC %>%
   filter(YEMF %in% c("2010", "2020","2030","2040", "2050","2060","2070","2080","2090", "2100")) %>% mutate(Energy_type = case_when(
     str_detect("Fin_Ene_Hyd", VEMF) ~ "Hydrogen",
     str_detect("Fin_Ene_Liq_Bio", VEMF) ~ "Biofuels",
@@ -36,6 +36,7 @@ df2 <- Fin_IAMC %>% filter(SCENARIO %in% c("1p5c_wo/nh3", "1p5c_w/nh3")) %>%
     str_detect("Fin_Ene_Solids", VEMF) ~ "Solids",
     str_detect("Fin_Ene_Gas", VEMF) ~ "Gas",
   ))
+write_csv(df2, "../data/csv/Fin_IAMC.csv")
 # Define colors based on the provided image (approximate hex values)
 
 library(dplyr)
@@ -153,7 +154,7 @@ Pri_IAMC <- df %>% filter(VEMF %in% c("Prm_Ene_Bio_w_CCS",
                                       ))
                                       
 Pri_IAMC$VEMF <- as.character(Pri_IAMC$VEMF)
-df4 <- Pri_IAMC %>% filter(SCENARIO %in% c("wo/NH3", "w/NH3")) %>%
+df4 <- Pri_IAMC %>% 
   filter(YEMF %in% c("2010", "2020","2030","2040", "2050","2060","2070","2080","2090", "2100")) %>% mutate(Energy_type = case_when(
     str_detect("Prm_Ene_Bio_w_CCS", VEMF) ~ "Biomass w/CCS",
     str_detect("Prm_Ene_Bio_wo_CCS", VEMF) ~ "Biomass wo/CCS",
@@ -169,6 +170,7 @@ df4 <- Pri_IAMC %>% filter(SCENARIO %in% c("wo/NH3", "w/NH3")) %>%
     str_detect("Prm_Ene_Solar", VEMF) ~ "Solar",
     str_detect("Prm_Ene_Win", VEMF) ~ "Wind"
   ))
+write_csv(df4, "../data/csv/Prm_IAMC.csv")
 
 # Create a color mapping for the energy types
 energy_type_colors <- c(
